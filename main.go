@@ -2,20 +2,16 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jason123447/go-demo-project/internal/controllers"
+	"github.com/jason123447/go-demo-project/internal/db"
 )
 
 func main() {
 	r := gin.Default()
-
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-			"body":   "test",
-		})
-	})
-
-	log.Fatal(r.Run(":8080"))
+	db.InitDB()
+	// controllers.setControllers(r)
+	controllers.SetControllers(r)
+	log.Fatal(r.Run(":8081"))
 }

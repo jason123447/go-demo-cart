@@ -1,0 +1,21 @@
+@use 'sass:math';
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+@mixin media-breakpoint-up($name) {
+  @media (min-width: map-get($grid-breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name) {
+  @media (max-width: (map-get($grid-breakpoints, $name) - 0.02px)) {
+    @content;
+  }
+}

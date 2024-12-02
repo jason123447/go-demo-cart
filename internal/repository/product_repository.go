@@ -7,12 +7,12 @@ import (
 )
 
 type Product struct {
-	ID          int       `json:"id" gorm:"primary_key"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Price       float64   `json:"price"`
-	Stock       int32     `json:"stock"`
-	CreatedAt   time.Time `json:"created_at"`
+	ID          int       `json:"id" gorm:"primary_key" validate:"-"`
+	Name        string    `json:"name" validate:"-"`
+	Description string    `json:"description" validate:"-"`
+	Price       float64   `json:"price" validate:"gt=0"`
+	Stock       int32     `json:"stock" validate:"min=0"`
+	CreatedAt   time.Time `json:"created_at" validate:"-"`
 }
 
 // curl -v -X POST http://localhost:8081/product \

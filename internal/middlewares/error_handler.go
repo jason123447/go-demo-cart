@@ -10,7 +10,16 @@ import (
 // ErrorHandlerMiddleware 捕獲錯誤的中介層
 func ErrorHandlerMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 設定一個狀態碼變數
+		defer func() {
+			if err := recover(); err != nil {
+				log.Println(err)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status":  "error",
+					"message": "Internal Server Error",
+					"details": err,
+				})
+			}
+		}()
 		c.Next() // 執行後續的 handler
 
 		// 檢查是否有錯誤

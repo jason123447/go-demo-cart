@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"errors"
 	"log"
 	"net/http"
 	"reflect"
@@ -44,10 +45,23 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 		}
 	}
 }
+func ReflectCopyAny(input any) (any, error) {
+	val := reflect.ValueOf(input)
+	if val.Kind() != reflect.Ptr {
+		return nil, errors.New("input must be a pointer")
+	}
+	val = val.Elem()
+	if val.Kind() != reflect.Struct {
+		return nil, errors.New("input must point to a struct")
+	}
+	copy := reflect.New(val.Type()).Elem()
+	copy.Set(val)
+	return copy.Addr().Interface(), nil
+}
 
 func ValidationMiddleware(obj any) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		println(reflect.TypeOf(obj).Kind() == reflect.Pointer)
+		// println(reflect.TypeOf(obj).Kind() == reflect.Pointer)
 		if err := c.ShouldBindBodyWith(obj, binding.JSON); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
@@ -68,7 +82,17 @@ func ValidationMiddleware(obj any) gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		c.Set("validated_obj", obj)
+		validated_obj, copyErr := ReflectCopyAny(obj)
+		if copyErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  "error",
+				"message": "Internal Server Error",
+				"details": "An unexpected error occurred",
+			})
+			c.Abort()
+			return
+		}
+		c.Set("validated_obj", validated_obj)
 		c.Next()
 	}
 }

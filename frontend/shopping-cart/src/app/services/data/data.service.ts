@@ -18,7 +18,7 @@ export class DataService {
   }
 
   getProducts() {
-    return this.http.get(`${this.apiurl}/products`);
+    return this.http.get<Product[]>(`${this.apiurl}/products`);
   }
 
   postProduct(product: Product) {

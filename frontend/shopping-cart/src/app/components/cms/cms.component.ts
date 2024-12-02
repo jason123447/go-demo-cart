@@ -4,6 +4,8 @@ import { PopupService } from '../../services/popup.service';
 import { ProductComponent } from './product/product.component';
 import { DataService } from '../../services/data/data.service';
 import { tap } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { Product } from '../../services/data/models.interface';
 
 @Component({
   selector: 'app-cms',
@@ -16,15 +18,12 @@ export class CmsComponent {
 
   popupServ = inject(PopupService);
   dataServ = inject(DataService);
+  displayColumns = ["id", "name", "description", "price", "stock"];
+  products = [] as Product[]
   ngOnInit() {
-    // this.dataServ.getUserById(2).pipe(tap(res => {
-    //   console.log(res);
-    // })).subscribe()
-    // this.dataServ.postProduct({
-    //   name: 'client sample product',
-    //   description: 'some text',
-    //   price: 5566
-    // }).subscribe()
+    this.dataServ.getProducts().pipe(tap(res => {
+      this.products = res;
+    })).subscribe();
   }
   onClickedAddProduct() {
     // this.popupServ.openSnackBar('test')

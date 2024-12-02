@@ -15,14 +15,13 @@ type Product struct {
 	CreatedAt   time.Time `json:"created_at" validate:"-"`
 }
 
-// curl -v -X POST http://localhost:8081/product \
-//
-//	-H "Content-Type: application/json" \
-//		-d '{
-//		  "name": "Sample Product",
-//		  "price": 99.99,
-//		  "stock": 10
-//		}'
+//	curl -v -X POST http://localhost:8081/product \
+//		-H "Content-Type: application/json" \
+//			-d '{
+//			  "name": "Sample Product",
+//			  "price": 99.99,
+//			  "stock": 10
+//			}'
 func CreateProduct(product *Product) error {
 	database := db.DB
 	result := database.Create(&product)

@@ -13,6 +13,7 @@ type Product struct {
 	Price       float64   `json:"price" validate:"gt=0"`
 	Stock       int32     `json:"stock" validate:"min=0"`
 	CreatedAt   time.Time `json:"created_at" validate:"-"`
+	Img         string    `json:"img" validate:"-"`
 }
 
 //	curl -v -X POST http://localhost:8081/product \

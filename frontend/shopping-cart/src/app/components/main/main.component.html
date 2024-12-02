@@ -10,3 +10,7 @@
 <div class="content">
     <router-outlet></router-outlet>
 </div>
+
+<div class="loading-container fixed" *ngIf="layoutServ.appLoading">
+    <mat-spinner></mat-spinner>
+</div>

@@ -14,7 +14,8 @@ export class PopupService {
 
   openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
-      duration: 3500
+      duration: 3500,
+      verticalPosition: 'top'
     });
   }
 
@@ -23,7 +24,7 @@ export class PopupService {
       panelClass: 'app-mat-dialog',
       minWidth: 500,
       minHeight: 430,
-      hasBackdrop:true,
+      hasBackdrop: true,
       ...config
     });
 

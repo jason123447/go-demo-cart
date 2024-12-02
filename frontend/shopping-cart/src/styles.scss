@@ -72,6 +72,12 @@ body {
             height: fit-content;
         }
     }
+
+    .admin-form-action {
+        padding: 10px 6px;
+        display: inline-flex;
+        justify-content: flex-end;
+    }
 }
 
 ::-webkit-scrollbar {
@@ -99,4 +105,11 @@ body {
             background: #deecf6;
         }
     }
+}
+
+.mat-mdc-raised-button.mat-primary {
+    --mdc-protected-button-container-color: #26a69a;
+    --mdc-protected-button-label-text-color: rgb(255, 255, 255);
+    --mat-protected-button-state-layer-color: black;
+    --mat-protected-button-ripple-color: rgba(0, 0, 0, 0.1);
 }

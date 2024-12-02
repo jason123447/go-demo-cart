@@ -3,11 +3,13 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jason123447/go-demo-project/internal/controllers/handlers"
+	"github.com/jason123447/go-demo-project/internal/middlewares"
+	"github.com/jason123447/go-demo-project/internal/repository"
 )
 
 func SetControllers(r *gin.Engine) {
 	r.GET("/user/:id", handlers.GetUserHandler)
-	r.POST("/product", handlers.PostProductHandler)
+	r.POST("/product", middlewares.ValidationMiddleware(&repository.Product{}), handlers.PostProductHandler)
 }
 
 // type Controller struct {

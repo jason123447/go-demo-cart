@@ -23,7 +23,7 @@ type Product struct {
 //		  "price": 99.99,
 //		  "stock": 10
 //		}'
-func CreateProduct(product Product) error {
+func CreateProduct(product *Product) error {
 	database := db.DB
 	result := database.Create(&product)
 	return result.Error

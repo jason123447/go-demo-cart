@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jason123447/go-demo-project/internal/handlers"
-	// "github.com/jason123447/go-demo-project/internal/services"
+	"github.com/jason123447/go-demo-project/internal/controllers/handlers"
 )
 
 func SetControllers(r *gin.Engine) {
 	r.GET("/user/:id", handlers.GetUserHandler)
+	r.POST("/product", handlers.CreateProductHandler)
 }
 
 // type Controller struct {

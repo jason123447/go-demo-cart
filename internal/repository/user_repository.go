@@ -6,8 +6,8 @@ import (
 )
 
 type User struct {
-	ID       string
-	Username string
+	ID       string `json:"id"`
+	Username string `json:"username"`
 }
 
 func GetUserByID(id string) (*User, error) {

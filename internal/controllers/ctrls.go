@@ -10,6 +10,7 @@ import (
 func SetControllers(r *gin.Engine) {
 	r.GET("/user/:id", handlers.GetUserHandler)
 	r.POST("/product", middlewares.ValidationMiddleware(&repository.Product{}), handlers.PostProductHandler)
+	r.GET("/products", handlers.GetProductsHandler)
 }
 
 // type Controller struct {

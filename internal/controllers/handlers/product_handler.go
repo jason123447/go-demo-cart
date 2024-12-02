@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jason123447/go-demo-project/internal/repository"
 	"github.com/jason123447/go-demo-project/internal/services"
@@ -30,4 +32,12 @@ func PostProductHandler(c *gin.Context) {
 	if err := services.CreateProductSvc(product); err != nil {
 		panic(err)
 	}
+}
+
+func GetProductsHandler(c *gin.Context) {
+	products, err := services.GetAllProductsSvc()
+	if err != nil {
+		panic(err)
+	}
+	c.JSON(http.StatusOK, products)
 }

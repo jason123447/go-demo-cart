@@ -8,3 +8,11 @@ func CreateProductSvc(product *repository.Product) error {
 	err := repository.CreateProduct(product)
 	return err
 }
+
+/*
+@todo pagination
+*/
+func GetAllProductsSvc() (*[]repository.QueryProduct, error) {
+	products, err := repository.GetAllProducts()
+	return products, err
+}

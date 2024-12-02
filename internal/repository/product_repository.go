@@ -16,6 +16,14 @@ type Product struct {
 	Img         string    `json:"img" validate:"-"`
 }
 
+type QueryProduct struct {
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	Stock       int32   `json:"stock"`
+}
+
 //	curl -v -X POST http://localhost:8081/product \
 //		-H "Content-Type: application/json" \
 //			-d '{
@@ -27,4 +35,11 @@ func CreateProduct(product *Product) error {
 	database := db.DB
 	result := database.Create(&product)
 	return result.Error
+}
+
+func GetAllProducts() (*[]QueryProduct, error) {
+	database := db.DB
+	var products []QueryProduct
+	result := database.Model(&Product{}).Find(&products)
+	return &products, result.Error
 }

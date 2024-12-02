@@ -7,7 +7,7 @@ import (
 
 func SetControllers(r *gin.Engine) {
 	r.GET("/user/:id", handlers.GetUserHandler)
-	r.POST("/product", handlers.CreateProductHandler)
+	r.POST("/product", handlers.PostProductHandler)
 }
 
 // type Controller struct {

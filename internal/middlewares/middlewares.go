@@ -62,9 +62,12 @@ func ReflectCopyAny(input any) (any, error) {
 func ValidationMiddleware(obj any) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// println(reflect.TypeOf(obj).Kind() == reflect.Pointer)
+		// c.ShouldBindWith(obj, binding.FormMultipart)
 		if err := c.ShouldBindBodyWith(obj, binding.JSON); err != nil {
+			log.Printf("\033[0;31m Panic recovered: %v \033[0m \nStack trace:\n%s", err, debug.Stack())
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error": err.Error(),
+				"error":  err.Error(),
+				"status": "binding error",
 			})
 			c.Abort()
 			return
@@ -74,9 +77,10 @@ func ValidationMiddleware(obj any) gin.HandlerFunc {
 			for _, err := range err.(validator.ValidationErrors) {
 				validationErrors = append(validationErrors, err.Error())
 			}
-
+			log.Printf("\033[0;31m Panic recovered: %v \033[0m \nStack trace:\n%s", validationErrors, debug.Stack())
 			c.JSON(http.StatusBadRequest, gin.H{
 				"errors": validationErrors,
+				"status": "validtion error",
 			})
 
 			c.Abort()

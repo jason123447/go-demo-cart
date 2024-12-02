@@ -1,0 +1,81 @@
+:host {
+  .app-login {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("../../../assets/login-bg.jpg");
+      background-size: cover;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+h1 {
+  font-size: 35px;
+  text-align: center;
+  color: #032F62;
+}
+
+span {
+  color: rgb(134, 15, 15);
+  font-size: 15px;
+}
+
+span::before {
+  content: "\f071";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  padding-right: 5px;
+}
+
+// button {
+//   padding: 10px 20px;
+//   cursor: pointer;
+//   border: none;
+//   font-size: 15px;
+//   font-weight: 600;
+//   line-height: 20px;
+//   border-radius: 3px;
+//   background-color: rgba(3, 47, 98, 0.801);
+//   color: white;
+// }
+
+.login-form {
+  width: 400px;
+  // border: 2px solid #e7e7e7;
+  border-radius: 5px;
+  background-color: white;
+  padding: 30px;
+  box-shadow: 2px 2px 4px #4040408c;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  .field {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+
+    .mat-mdc-form-field {
+      
+      width: 100%;
+    }
+    // input {
+    //   // max-width: 180px;
+    //   width: 100%;
+    // }
+  }
+}

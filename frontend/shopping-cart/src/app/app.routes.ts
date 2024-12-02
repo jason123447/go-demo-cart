@@ -1,9 +1,33 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { MallComponent } from './components/home/mall.component';
+import { MainComponent } from './components/main/main.component';
+import { authGuard } from './guards/auth.guard';
+import { LoginComponent } from './components/login/login.component';
+import { CmsComponent } from './components/cms/cms.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
+    {
+        path: '',
+        component: MainComponent,
+        canActivate: [authGuard],
+        children: [
+            {
+                path: 'home',
+                component: MallComponent
+            },
+            {
+                path: 'cms',
+                component: CmsComponent
+            }
+        ]
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     }
-];
+]

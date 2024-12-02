@@ -1,0 +1,79 @@
+// @import url("~/utils/scss/breakpoint.scss");
+@import 'breakpoint';
+:host {
+  .food-list-container {
+    padding: 1rem;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // gap: 8px;
+    column-count: 2;
+    column-gap: 10px;
+    @include media-breakpoint-up(sm) {
+      columns: 3;
+    }
+    @include media-breakpoint-up(xl) {
+      columns: 4;
+    }
+    @include media-breakpoint-up(xxl) {
+      columns: 5;
+    }
+  }
+
+  .food {
+    // background-color: lightgrey;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0 auto 8px;
+    break-inside: avoid;
+    // flex: calc(25% - 1rem);
+    // max-width: 400px;
+    // margin-left: auto;
+    // margin-right: auto;
+    transition-duration: .2s;
+    &:hover {
+      transform: scale(102%)
+    }
+    .card-content {
+      img {
+        width: 100%;
+        object-fit: cover;
+        object-position: 50% 50%;
+      }
+    }
+    .card-actions {
+      padding: 0 12px;
+      // gap: .5rem;
+      // display: inline-flex;
+      // justify-content: space-between;
+      .price {
+        font-size: 1.375rem;
+        color: pink;
+        margin-right: auto;
+      }
+    }
+  }
+
+  .cart {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: black;
+    box-shadow: 2px 2px 4px oklch(0.64 0 0);
+    z-index: 99;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(0.9);
+    }
+    .mat-badge-content {
+      --mat-badge-legacy-container-size: 16px;
+    }
+    .cart-icon-container {
+      display: flex;
+    }
+  }
+}

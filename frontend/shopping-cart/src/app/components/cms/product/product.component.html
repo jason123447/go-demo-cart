@@ -1,0 +1,31 @@
+<div class="admin-form-header admin-form-header__product">
+    <h2>Add/Edit Product</h2>
+</div>
+<div class="admin-form-content admin-form-content__product">
+    <form [formGroup]="form">
+        <mat-form-field>
+            <mat-label>Product name</mat-label>
+            <input matInput placeholder="name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Price</mat-label>
+            <input matInput type="number" placeholder="0">
+            <span matTextPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field class="max-w-full w-full">
+            <mat-label>Description</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cols="200" cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"></textarea>
+        </mat-form-field>
+        <mat-form-field floatLabel="always" class="w-full">
+            <mat-label>upload image</mat-label>
+            <input matInput #fn name="file" type="text" (click)="fi.click()" placeholder="choose file" [value]="$any(fi.files![0])?.name" readonly>
+            <input type="file" #fi class="hidden" (change)="cd.detectChanges()">
+        </mat-form-field>
+        <!-- <div class="file-upload-input-container" (click)="fileInput.click()" matRipple>
+                <span>upload image</span>
+                <mat-icon>upload</mat-icon>
+        </div> -->
+        <input #fileInput class="hidden" type="file" name="fileInput" accept="image/*" (change)="selectFiles($event)" />
+    </form>
+</div>

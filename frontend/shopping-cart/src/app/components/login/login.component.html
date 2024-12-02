@@ -1,0 +1,29 @@
+<div class="app-login">
+    <form class="login-form" [formGroup]="loginForm">
+        <h1>Log In</h1>
+        <div class="field">
+            <mat-form-field>
+                <mat-icon matPrefix>person</mat-icon>
+                <input matInput type="text" placeholder="Account" formControlName="account">
+                @if (loginForm.controls.account.hasError('required')) {
+                    <mat-error>Account is required</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <mat-form-field>
+                <mat-icon matPrefix>lock</mat-icon>
+                <input matInput type="password" placeholder="Password" formControlName="password">
+                @if (loginForm.controls.password.hasError('required')) {
+                    <mat-error>Password is required</mat-error>
+                }
+                @if (loginForm.controls.password.hasError('pattern')) {
+                    <mat-error>Invalid password</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="w-full inline-flex justify-center">
+            <button mat-button color="primary" (click)="onSubmit()">Log In</button>
+        </div>
+    </form>
+</div>

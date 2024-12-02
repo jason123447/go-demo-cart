@@ -6,7 +6,7 @@ import { NgMaterialModule } from './modules/ng-material/ng-material.module';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NgMaterialModule],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

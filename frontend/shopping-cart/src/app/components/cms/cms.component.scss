@@ -1,0 +1,25 @@
+:host {
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .right-align {
+    text-align: right;
+  }
+
+  input.right-align::-webkit-outer-spin-button,
+  input.right-align::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  input.right-align {
+    appearance: textfield;
+  }
+
+  .table-container {
+    display: flex;
+    flex-grow: 1;
+  }
+}

@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="app-toolbar">
+    <mat-icon class="mr-2 text-white">restaurant</mat-icon>
+    <div class="inline-flex gap-2">
+        <button mat-button class="nav-btn" [routerLink]="'/login'" routerLinkActive="active">Login</button>
+        <button mat-button class="nav-btn" [routerLink]="'/home'" routerLinkActive="active">Home</button>
+        <button mat-button class="nav-btn" [routerLink]="'/cms'" routerLinkActive="active">CMS</button>
+    </div>
+</mat-toolbar>
+
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

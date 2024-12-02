@@ -14,8 +14,11 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
 
 
 export function logInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+    const originHeaders = req.headers;
     req = req.clone({
-        headers: req.headers.set('Content-Type', 'application/json')
-    })
+        setHeaders: {
+            'Content-Type': originHeaders.has('Content-Type') ? originHeaders.get('Content-Type')! : 'application/json'
+        }
+    });   
     return next(req);
 }

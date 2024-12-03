@@ -22,6 +22,7 @@ type QueryProduct struct {
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
 	Stock       int32   `json:"stock"`
+	Img         string  `json:"img" validate:"-"`
 }
 
 //	curl -v -X POST http://localhost:8081/product \
@@ -43,6 +44,14 @@ func GetAllProducts() (*[]QueryProduct, error) {
 	result := database.Model(Product{}).Order("id ASC").Find(&products)
 	return &products, result.Error
 }
+
+// func GetAllProducts() (*[]QueryProduct, error) {
+// 	database := db.DB
+// 	var products []QueryProduct
+// 	columns := []string{"id", "name", "description", "price", "stock", "img"}
+// 	result := database.Model(&Product{}).Select(columns).Order("id ASC").Find(&products)
+// 	return &products, result.Error
+// }
 
 func UpdateProduct(product *Product) error {
 	database := db.DB

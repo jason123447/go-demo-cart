@@ -47,6 +47,21 @@ export class DataService {
     return this.http.get<Product>(`${this.apiurl}/product/img/${id}`);
   }
 
+  postOrder() {
+    this.http.post(`${this.apiurl}/order`, {
+      user_id: 2,
+      status: "Pending",
+      total: 160,
+      order_items: [
+        {
+          product_id: 50,
+          quantity: 2,
+          price: 160
+        }
+      ]
+    }).subscribe()
+  }
+
   fileToBase64(blob: Blob) {
     return new Observable<string>((sub) => {
       const reader = new FileReader();

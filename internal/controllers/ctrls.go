@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jason123447/go-demo-project/internal/controllers/handlers"
 	"github.com/jason123447/go-demo-project/internal/middlewares"
@@ -13,6 +15,17 @@ func SetControllers(r *gin.Engine) {
 	r.PUT("/product", middlewares.ValidationMiddleware(&repository.Product{}), handlers.PutProductHandler)
 	r.GET("/product/img/:id", handlers.GetProductImgHandler)
 	r.GET("/products", handlers.GetProductsHandler)
+	r.POST("/order", middlewares.ValidationMiddleware(&repository.Order{}), handlers.PostOrderHandler)
+	r.GET("/research", func(c *gin.Context) {
+		img := c.DefaultQuery("img", "true")
+		param := c.Query("param")
+		println(img, param)
+		var stringBuilder strings.Builder
+		stringBuilder.WriteString(img)
+		stringBuilder.WriteString(" - ")
+		stringBuilder.WriteString(param)
+		c.Writer.Write([]byte(stringBuilder.String()))
+	})
 }
 
 // type Controller struct {

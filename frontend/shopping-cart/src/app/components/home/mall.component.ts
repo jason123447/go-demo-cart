@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { NgMaterialModule } from '../../modules/ng-material/ng-material.module';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
-import { FoodDetailComponent } from './food-detail/food-detail.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-mall',
@@ -12,7 +13,8 @@ import { FoodDetailComponent } from './food-detail/food-detail.component';
   styleUrl: './mall.component.scss'
 })
 export class MallComponent {
-  dialog = inject(MatDialog);
+  popupServ = inject(PopupService);
+
   foodlist = [
     "assets/foods/pexels-avichal-lodhi-1054429-2819088.jpg",
     "assets/foods/pexels-valeriya-1148087.jpg",
@@ -32,9 +34,7 @@ export class MallComponent {
     "assets/foods/pexels-valeriya-1332267.jpg",
   ]
 
-  openFoodDetail(food:any) {
-    const dialogRef = this.dialog.open(FoodDetailComponent, {
-      data: { name: 'fooooood passed'}
-    });
+  openProductDetail(product: any) {
+    const dialogRef = this.popupServ.openDialog(ProductDetailComponent)
   }
 }

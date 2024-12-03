@@ -3,13 +3,13 @@ import { Component, Inject, Optional } from '@angular/core';
 import { NgMaterialModule } from '../../../modules/ng-material/ng-material.module';
 
 @Component({
-  selector: 'app-food-detail',
+  selector: 'app-product-detail',
   standalone: true,
   imports: [NgMaterialModule],
-  templateUrl: './food-detail.component.html',
-  styleUrl: './food-detail.component.scss'
+  templateUrl: './product-detail.component.html',
+  styleUrl: './product-detail.component.scss'
 })
-export class FoodDetailComponent {
+export class ProductDetailComponent {
   constructor(
     public dialogRef: DialogRef<string>,
     @Optional() @Inject(DIALOG_DATA) public data: any

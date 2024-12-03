@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { MallComponent } from './components/home/mall.component';
+import { MallComponent } from './components/mall/mall.component';
 import { MainComponent } from './components/main/main.component';
 import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from './components/login/login.component';

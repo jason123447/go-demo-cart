@@ -41,3 +41,10 @@ func GetProductsHandler(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, products)
 }
+
+func PutProductHandler(c *gin.Context) {
+	product := c.MustGet("validated_obj").(*repository.Product)
+	if err := services.UpdateProductSvc(product); err != nil {
+		panic(err)
+	}
+}

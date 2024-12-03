@@ -16,3 +16,8 @@ func GetAllProductsSvc() (*[]repository.QueryProduct, error) {
 	products, err := repository.GetAllProducts()
 	return products, err
 }
+
+func UpdateProductSvc(product *repository.Product) error {
+	err := repository.UpdateProduct(product)
+	return err
+}

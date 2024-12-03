@@ -40,6 +40,10 @@ func CreateProduct(product *Product) error {
 func GetAllProducts() (*[]QueryProduct, error) {
 	database := db.DB
 	var products []QueryProduct
-	result := database.Model(&Product{}).Find(&products)
+	result := database.Model(Product{}).Order("id ASC").Find(&products)
 	return &products, result.Error
+}
+func UpdateProduct(product *Product) error {
+	database := db.DB
+	return database.Model((Product{})).Where("id = ?", product.ID).Updates(&product).Error
 }

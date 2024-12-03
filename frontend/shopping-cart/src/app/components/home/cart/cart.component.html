@@ -1,0 +1,27 @@
+@if (!cartItems || !cartItems.length) {
+<div class="text-3xl h-full w-full inline-flex flex-col flex-grow justify-center items-center">
+    <div>No Items</div>
+</div>
+} @else {
+<div class="cart-container">
+    <div class="inline-flex text-2xl justify-center px-1 cart-header">Cart Items</div>
+
+    <div class="cart-body p-2">
+        @for (item of cartItems; track $index) {
+        <div class="cart-item">
+            <div class="product-name">{{ item.name }}</div>
+            <div class="product-price">${{ item.price }}</div>
+            <div class="product-quantity">
+                <span matRipple class="action-icon-btn" (click)="onClickedModifyQuantity(item, -1)"><mat-icon>remove</mat-icon></span>
+                <input type="number" class="cart-number-input" min="0" [(ngModel)]="item.quantity">
+                <span matRipple class="action-icon-btn" (click)="onClickedModifyQuantity(item, 1)"><mat-icon>add</mat-icon></span>
+            </div>
+            <div class="operation">
+                <button mat-icon-button color="warn" (click)="onClickedRemoveCartItem(item)"><mat-icon>delete</mat-icon></button>
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
+}

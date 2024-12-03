@@ -1,0 +1,37 @@
+@mixin product-card-style() {
+  .product {
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0 auto 8px;
+    break-inside: avoid;
+    transition-duration: 0.2s;
+    &:hover {
+      transform: scale(102%);
+    }
+    .card-content {
+      img {
+        width: 100%;
+        object-fit: cover;
+        object-position: 50% 50%;
+      }
+    }
+    .card-actions {
+      padding: 0 12px;
+      .price {
+        font-size: 1.375rem;
+        color: oklch(0.64 0.23 15.01);;
+        margin-right: auto;
+      }
+    }
+
+    .desc {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      text-overflow: ellipsis;
+      text-align: start;
+      text-indent: 1em;
+    }
+  }
+}

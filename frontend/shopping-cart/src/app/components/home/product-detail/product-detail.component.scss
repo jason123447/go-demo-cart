@@ -1,0 +1,18 @@
+@import "../product.card.scss";
+:host {
+  @include product-card-style();
+  .product {
+    margin: 0;
+    &:hover {
+      transform: none;
+    }
+    .card-content {
+      img {
+        max-height: 400px;
+        object-fit: contain;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}

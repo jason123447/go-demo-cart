@@ -4,6 +4,12 @@ import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { PopupService } from '../../services/popup.service';
+import { LayoutService } from '../../services/layout.service';
+import { DataService } from '../../services/data/data.service';
+import { firstValueFrom, tap } from 'rxjs';
+import { Product } from '../../services/data/models.interface';
+import { CartService } from '../../services/cart.service';
+import { CartComponent } from './cart/cart.component';
 
 @Component({
   selector: 'app-mall',
@@ -14,27 +20,45 @@ import { PopupService } from '../../services/popup.service';
 })
 export class MallComponent {
   popupServ = inject(PopupService);
+  layoutServ = inject(LayoutService);
+  dataServ = inject(DataService);
+  cartServ = inject(CartService);
 
-  foodlist = [
-    "assets/foods/pexels-avichal-lodhi-1054429-2819088.jpg",
-    "assets/foods/pexels-valeriya-1148087.jpg",
-    "assets/foods/pexels-wendyaffieplaas-1178610.jpg",
-    "assets/foods/pexels-cottonbro-3338500.jpg",
-    "assets/foods/pexels-cottonbro-3296391.jpg",
-    "assets/foods/pexels-edwardeyer-687824.jpg",
-    "assets/foods/pexels-goumbik-618775.jpg",
-    "assets/foods/pexels-harry-dona-2338407.jpg",
-    "assets/foods/pexels-jeshoots-3688.jpg",
-    "assets/foods/pexels-mali-65175.jpg",
-    "assets/foods/pexels-pixabay-60616.jpg",
-    "assets/foods/pexels-pixabay-361184.jpg",
-    "assets/foods/pexels-rajesh-tp-749235-1600727.jpg",
-    "assets/foods/pexels-samerdaboul-2233729.jpg",
-    "assets/foods/pexels-teejay-1362534.jpg",
-    "assets/foods/pexels-valeriya-1332267.jpg",
-  ]
+  productList: Product[] = [];
 
-  openProductDetail(product: any) {
-    const dialogRef = this.popupServ.openDialog(ProductDetailComponent)
+  openProductDetail(product: Product) {
+    const dialogRef = this.popupServ.openDialog(ProductDetailComponent, {
+      data: product
+    })
+  }
+
+  ngOnInit() {
+    this.initData();
+    this.dataServ.postOrder();
+  }
+
+  async initData() {
+    this.layoutServ.appLoading = true;
+    await firstValueFrom(this.dataServ.getProducts().pipe(tap(res => {
+      this.productList = res;
+    }))).catch(err => err)
+    this.layoutServ.appLoading = false;
+  }
+
+  onClickedOpenCart() {
+    if (!this.cartServ.cartItems.length) return;
+    const dialogRef = this.popupServ.openDialog(CartComponent);
+  }
+
+  onClickedAddToCart(product: Product, event: Event) {
+    // event.preventDefault();
+    event.stopPropagation();
+    const cartItems = this.cartServ.cartItems;
+    const idx = cartItems.findIndex(e => e.id === product.id);
+    if (idx !== -1) {
+      cartItems[idx].quantity += 1;
+    } else {
+      cartItems.push({ ...product, quantity: 1 });
+    }
   }
 }

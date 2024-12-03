@@ -22,6 +22,7 @@ $theme: mat.define-light-theme(
     --ng-theme-primary: #{mat.get-theme-color($theme, primary, 400)};
     --ng-theme-accent: #{mat.get-theme-color($theme, accent, 400)};
     --ng-theme-warn: #{mat.get-theme-color($theme, warn, 400)};
+    --mat-badge-text-color: white;
 }
 // 將主題應用到 Angular Material 元件
 @include mat.all-component-themes($theme);

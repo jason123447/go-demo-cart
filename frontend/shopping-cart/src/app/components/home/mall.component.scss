@@ -1,8 +1,11 @@
 // @import url("~/utils/scss/breakpoint.scss");
-@import 'breakpoint';
+@import "breakpoint";
+@import "./product.card.scss";
 :host {
-  .food-list-container {
+  .product-list-container {
+    background-color: #ffc107bf;
     padding: 1rem;
+    min-height: calc(100vh - 64px - 2rem);
     // display: flex;
     // flex-direction: row;
     // flex-wrap: wrap;
@@ -20,41 +23,7 @@
     }
   }
 
-  .food {
-    // background-color: lightgrey;
-    text-align: center;
-    padding: 5px;
-    box-sizing: border-box;
-    margin: 0 auto 8px;
-    break-inside: avoid;
-    // flex: calc(25% - 1rem);
-    // max-width: 400px;
-    // margin-left: auto;
-    // margin-right: auto;
-    transition-duration: .2s;
-    &:hover {
-      transform: scale(102%)
-    }
-    .card-content {
-      img {
-        width: 100%;
-        object-fit: cover;
-        object-position: 50% 50%;
-      }
-    }
-    .card-actions {
-      padding: 0 12px;
-      // gap: .5rem;
-      // display: inline-flex;
-      // justify-content: space-between;
-      .price {
-        font-size: 1.375rem;
-        color: pink;
-        margin-right: auto;
-      }
-    }
-  }
-
+  @include product-card-style();
   .cart {
     position: fixed;
     bottom: 1.5rem;

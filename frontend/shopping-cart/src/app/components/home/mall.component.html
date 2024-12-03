@@ -1,27 +1,28 @@
-<div class="food-list-container">
-    <mat-card class="food" *ngFor="let food of foodlist" (click)="openProductDetail(food)">
+<div class="product-list-container">
+    <mat-card class="product" *ngFor="let product of productList" (click)="openProductDetail(product)">
         <mat-card-header>
-            <mat-card-title>Food Name</mat-card-title>
-            <mat-card-subtitle>from Taiwan</mat-card-subtitle>
+            <mat-card-title>{{product.name}}</mat-card-title>
+            <mat-card-subtitle>
+                <div class="desc">
+                    {{ product.description }}
+                </div>
+            </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="card-content">
-            <div class="desc">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt, eos!
-            </div>
-            <img [src]="food" alt="">
+            <img [src]="product.img" alt="">
         </mat-card-content>
         <mat-card-actions class="card-actions">
-            <span class="price">$200</span>
-            <mat-icon>favorite_outline</mat-icon>
-            <mat-icon>favorite</mat-icon>
-            <button mat-button color="warn">加入</button>
+            <span class="price">${{product.price}}</span>
+            <!-- <mat-icon>favorite_outline</mat-icon>
+            <mat-icon>favorite</mat-icon> -->
+            <button mat-button color="warn" (click)="onClickedAddToCart(product,$event)">加入 {{cartServ.getCartItemQuantity(product.id!)}}</button>
         </mat-card-actions>
     </mat-card>
 </div>
 
-<div mat-button class="cart" cdkDrag>
+<div mat-button class="cart" (click)="onClickedOpenCart()">
     <!-- <mat-icon>shopping cart</mat-icon> -->
-    <span matBadge="7" class="cart-icon-container">
+    <span [matBadge]="cartServ.cartItems.length" class="cart-icon-container">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
             <path
                 d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z" />

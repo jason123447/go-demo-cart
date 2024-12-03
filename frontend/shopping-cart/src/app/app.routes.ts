@@ -8,7 +8,7 @@ import { CmsComponent } from './components/cms/cms.component';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'mall',
         pathMatch: 'full'
     },
     {
@@ -17,7 +17,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [
             {
-                path: 'home',
+                path: 'mall',
                 component: MallComponent
             },
             {

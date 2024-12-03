@@ -39,6 +39,10 @@ export class DataService {
     });
   }
 
+  putProduct(product: Product) {
+    return this.http.put(`${this.apiurl}/product`, product);
+  }
+
   fileToBase64(blob: Blob) {
     return new Observable<string>((sub) => {
       const reader = new FileReader();

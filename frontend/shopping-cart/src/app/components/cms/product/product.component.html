@@ -21,13 +21,13 @@
             <mat-label>upload image</mat-label>
             <input matInput #fn name="img" type="text" (click)="imgInput.click()" placeholder="choose file"
                 [value]="$any(imgInput.files![0])?.name" readonly>
-            <input type="file" #imgInput class="hidden" (change)="cd.detectChanges();selectFiles($event)">
+            <input type="file" #imgInput class="hidden" (change)="cd.detectChanges();">
         </mat-form-field>
     </form>
 </div>
 <div class="admin-form-action">
     @if (isEdit){
-    <button mat-raised-button color="primary">儲存</button>
+    <button mat-raised-button color="primary" (click)="onClickedEditProduct()">儲存</button>
     } @else {
     <button mat-raised-button color="primary" (click)="onClickedAddProduct()">新增</button>
     }

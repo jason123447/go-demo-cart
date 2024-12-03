@@ -19,7 +19,7 @@ export class ProductComponent {
   fb = inject(FormBuilder)
   form = this.fb.group({
     name: ['', Validators.required],
-    description: ['Hello', Validators.required],
+    description: ['Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda totam amet asperiores commodi blanditiis error.', Validators.required],
     price: [0, Validators.min(0)]
   });
   dataServ = inject(DataService);
@@ -31,14 +31,27 @@ export class ProductComponent {
     public cd: ChangeDetectorRef,
     public dialogRef: DialogRef<string>,
     @Optional() @Inject(DIALOG_DATA) public data: any,
-  ) {
-    if (data) {
+  ) { }
+
+  ngOnInit() {
+    if (this.data) {
       this.isEdit = true;
+      Object.entries(this.data).forEach(([key, value]) => {
+        const formCtrl = this.form.controls[key];
+        if (formCtrl) {
+          formCtrl.setValue(value);
+        }
+      });
     }
   }
 
-  selectFiles(event: any) {
-    console.log(event);
+  async setImgbase64(product: Product) {
+    const file = this.imgInput?.nativeElement.files[0];
+    if (file) {
+      const imgbase64 = await lastValueFrom(this.dataServ.fileToBase64(file));
+      product.img = imgbase64;
+    }
+    this.layoutServ.appLoading = true;
   }
 
   async onClickedAddProduct() {
@@ -46,9 +59,8 @@ export class ProductComponent {
       this.popupServ.openSnackBar('Invalid data');
       return
     }
-    const imgbase64 = await lastValueFrom(this.dataServ.fileToBase64(this.imgInput?.nativeElement.files[0]));
-    const product: Product = { ...this.form.value } as any;
-    product.img = imgbase64;
+    const product = { ...this.form.value } as Product;
+    await this.setImgbase64(product);
     this.layoutServ.appLoading = true;
     const res = await firstValueFrom(this.dataServ.postProduct(product)).catch(err => err);
     this.layoutServ.appLoading = false;
@@ -56,5 +68,18 @@ export class ProductComponent {
     this.popupServ.openSnackBar('Success !!');
     this.form.reset();
     this.imgInput!.nativeElement.value = '';
+  }
+
+  async onClickedEditProduct() {
+    if (this.form.invalid) {
+      this.popupServ.openSnackBar('Invalid data')
+      return
+    }
+    const product = { ...this.form.value, id: this.data.id } as Product;
+    this.layoutServ.appLoading = true;
+    const res = await firstValueFrom(this.dataServ.putProduct(product)).catch(err => err);
+    this.layoutServ.appLoading = false;
+    if (res?.ok === false) return;
+    this.popupServ.openSnackBar('Success !!');
   }
 }

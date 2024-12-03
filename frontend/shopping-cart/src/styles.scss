@@ -105,6 +105,13 @@ body {
             background: #deecf6;
         }
     }
+    tbody {
+        tr {
+            &:hover {
+                filter: brightness(0.95);
+            }
+        }
+    }
 }
 
 .mat-mdc-raised-button.mat-primary {

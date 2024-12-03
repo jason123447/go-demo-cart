@@ -4,6 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class LayoutService {
-  appLoading = false;
+
+  set appLoading(bool: boolean) {
+    Promise.resolve().then(_ => {
+      this._appLoading = bool;
+    });
+  }
+
+  get appLoading() {
+    return this._appLoading;
+  }
+
+  private _appLoading = false;
   constructor() { }
 }

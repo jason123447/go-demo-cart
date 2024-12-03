@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jason123447/go-demo-project/internal/repository"
@@ -47,4 +48,15 @@ func PutProductHandler(c *gin.Context) {
 	if err := services.UpdateProductSvc(product); err != nil {
 		panic(err)
 	}
+}
+
+func GetProductImgHandler(c *gin.Context) {
+	productID, _ := strconv.Atoi((c.Param("id")))
+	base64Str, err := services.GetProductImgSvc(productID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"id": productID, "img": base64Str})
+	// c.JSON(http.StatusOK, repository.Product{ID: productID, Img: base64Str})
 }

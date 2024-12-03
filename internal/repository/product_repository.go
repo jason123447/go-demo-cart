@@ -43,7 +43,15 @@ func GetAllProducts() (*[]QueryProduct, error) {
 	result := database.Model(Product{}).Order("id ASC").Find(&products)
 	return &products, result.Error
 }
+
 func UpdateProduct(product *Product) error {
 	database := db.DB
 	return database.Model((Product{})).Where("id = ?", product.ID).Updates(&product).Error
+}
+
+func GetProductById(id int) (*Product, error) {
+	database := db.DB
+	var product Product
+	result := database.First(&product, id)
+	return &product, result.Error
 }

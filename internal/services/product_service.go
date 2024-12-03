@@ -21,3 +21,8 @@ func UpdateProductSvc(product *repository.Product) error {
 	err := repository.UpdateProduct(product)
 	return err
 }
+
+func GetProductImgSvc(id int) (string, error) {
+	product, err := repository.GetProductById(id)
+	return product.Img, err
+}

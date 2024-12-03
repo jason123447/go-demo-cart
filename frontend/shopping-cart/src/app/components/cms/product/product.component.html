@@ -19,11 +19,14 @@
         </mat-form-field>
         <mat-form-field floatLabel="always" class="w-full">
             <mat-label>upload image</mat-label>
-            <input matInput #fn name="img" type="text" (click)="imgInput.click()" placeholder="choose file"
+            <input matInput #fn name="img" type="text" (click)="imgInput.click()" [placeholder]="'choose file' + (isEdit ? ' (update)' : '')"
                 [value]="$any(imgInput.files![0])?.name" readonly>
-            <input type="file" #imgInput class="hidden" (change)="cd.detectChanges();">
+            <input type="file" #imgInput class="hidden" (change)="cd.detectChanges();selectFile($event)">
         </mat-form-field>
     </form>
+    @if (imgBase64) {
+        <img [src]="imgBase64" class="img-preview">
+    }
 </div>
 <div class="admin-form-action">
     @if (isEdit){

@@ -43,6 +43,10 @@ export class DataService {
     return this.http.put(`${this.apiurl}/product`, product);
   }
 
+  getProductImgById(id: number) {
+    return this.http.get<Product>(`${this.apiurl}/product/img/${id}`);
+  }
+
   fileToBase64(blob: Blob) {
     return new Observable<string>((sub) => {
       const reader = new FileReader();

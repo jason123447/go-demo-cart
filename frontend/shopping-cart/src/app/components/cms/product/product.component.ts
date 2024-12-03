@@ -5,7 +5,7 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { DataService } from '../../../services/data/data.service';
 import { PopupService } from '../../../services/popup.service';
 import { LayoutService } from '../../../services/layout.service';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom, tap } from 'rxjs';
 import { Product } from '../../../services/data/models.interface';
 
 @Component({
@@ -25,6 +25,7 @@ export class ProductComponent {
   dataServ = inject(DataService);
   popupServ = inject(PopupService);
   layoutServ = inject(LayoutService);
+  imgBase64 = '';
   @ViewChild('imgInput', { read: ElementRef }) imgInput?: ElementRef;
   isEdit = false;
   constructor(
@@ -34,6 +35,10 @@ export class ProductComponent {
   ) { }
 
   ngOnInit() {
+    this.initData();
+  }
+
+  async initData() {
     if (this.data) {
       this.isEdit = true;
       Object.entries(this.data).forEach(([key, value]) => {
@@ -42,16 +47,26 @@ export class ProductComponent {
           formCtrl.setValue(value);
         }
       });
+      this.layoutServ.appLoading = true;
+      await firstValueFrom(this.dataServ.getProductImgById(this.data.id).pipe(tap(res => {
+        this.imgBase64 = res.img!
+      })))
+      this.layoutServ.appLoading = false;
+    }
+  }
+
+  async selectFile(_: Event) {
+    const file = this.imgInput?.nativeElement.files[0];
+    if (file) {
+      const imgbase64 = await lastValueFrom(this.dataServ.fileToBase64(file));
+      this.imgBase64 = imgbase64;
+    } else {
+      this.imgBase64 = '';
     }
   }
 
   async setImgbase64(product: Product) {
-    const file = this.imgInput?.nativeElement.files[0];
-    if (file) {
-      const imgbase64 = await lastValueFrom(this.dataServ.fileToBase64(file));
-      product.img = imgbase64;
-    }
-    this.layoutServ.appLoading = true;
+    product.img = this.imgBase64;
   }
 
   async onClickedAddProduct() {
@@ -68,6 +83,7 @@ export class ProductComponent {
     this.popupServ.openSnackBar('Success !!');
     this.form.reset();
     this.imgInput!.nativeElement.value = '';
+    this.imgBase64 = '';
   }
 
   async onClickedEditProduct() {
@@ -76,10 +92,12 @@ export class ProductComponent {
       return
     }
     const product = { ...this.form.value, id: this.data.id } as Product;
+    await this.setImgbase64(product);
     this.layoutServ.appLoading = true;
     const res = await firstValueFrom(this.dataServ.putProduct(product)).catch(err => err);
     this.layoutServ.appLoading = false;
     if (res?.ok === false) return;
     this.popupServ.openSnackBar('Success !!');
   }
+
 }

@@ -16,4 +16,8 @@
       filter: brightness(0.9);
     }
   }
+  .img-preview {
+    height: 240px;
+    object-fit: contain;
+  }
 }

@@ -12,15 +12,26 @@
             <div class="product-name">{{ item.name }}</div>
             <div class="product-price">${{ item.price }}</div>
             <div class="product-quantity">
-                <span matRipple class="action-icon-btn" (click)="onClickedModifyQuantity(item, -1)"><mat-icon>remove</mat-icon></span>
-                <input type="number" class="cart-number-input" min="0" [(ngModel)]="item.quantity">
-                <span matRipple class="action-icon-btn" (click)="onClickedModifyQuantity(item, 1)"><mat-icon>add</mat-icon></span>
+                <span matRipple class="action-icon-btn" [class.disabled]="item.quantity === 1"
+                    (click)="onClickedModifyQuantity(item, -1)"><mat-icon>remove</mat-icon></span>
+                <input type="number" class="cart-number-input" [(ngModel)]="item.quantity" (ngModelChange)="refreshCartItems()" appOnlyNumber appMinMax
+                    [appMin]="1" [appMax]="99" min="1" max="99">
+                <span matRipple class="action-icon-btn"
+                    (click)="onClickedModifyQuantity(item, 1)"><mat-icon>add</mat-icon></span>
             </div>
             <div class="operation">
-                <button mat-icon-button color="warn" (click)="onClickedRemoveCartItem(item)"><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button color="warn"
+                    (click)="onClickedRemoveCartItem(item)"><mat-icon>delete</mat-icon></button>
             </div>
         </div>
         }
+    </div>
+
+    <div class="cart-action p-2">
+        <span class="mr-4 text-lg">
+            Total: <span class="price-text">${{cartServ.total}}</span>
+        </span>
+        <button mat-raised-button color="warn">結帳 {{cartServ.getCartItemsLengthDisplay()}}</button>
     </div>
 
 </div>

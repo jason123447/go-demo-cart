@@ -4,16 +4,18 @@ import { NgMaterialModule } from '../../../modules/ng-material/ng-material.modul
 import { MatRippleModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SharedDirectiveModule } from '../../../directive/shared-directive.module';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, NgMaterialModule, MatRippleModule, FormsModule],
+  imports: [CommonModule, NgMaterialModule, MatRippleModule, FormsModule, SharedDirectiveModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
   cartServ = inject(CartService);
+  total: number = 0.00;
   get cartItems() {
     return this.cartServ.cartItems;
   }
@@ -24,13 +26,17 @@ export class CartComponent {
 
   onClickedModifyQuantity(item: CartItem, direction: number) {
     item.quantity += direction;
-    if(item.quantity <= 0) {
-      item.quantity = 0;
+    if (item.quantity <= 1) {
+      item.quantity = 1;
     }
+    this.refreshCartItems();
   }
 
   onClickedRemoveCartItem(item: CartItem) {
     this.cartItems.splice(this.cartItems.findIndex(e => e === item), 1);
   }
 
+  refreshCartItems() {
+    this.cartItems = this.cartItems;
+  }
 }

@@ -23,6 +23,7 @@ $theme: mat.define-light-theme(
     --ng-theme-accent: #{mat.get-theme-color($theme, accent, 400)};
     --ng-theme-warn: #{mat.get-theme-color($theme, warn, 400)};
     --mat-badge-text-color: white;
+    --price-text-color: oklch(0.64 0.23 15.01);
 }
 // 將主題應用到 Angular Material 元件
 @include mat.all-component-themes($theme);
@@ -113,6 +114,10 @@ body {
             }
         }
     }
+}
+
+.price-text {
+    color: var(--price-text-color);
 }
 
 .mat-mdc-raised-button.mat-primary {

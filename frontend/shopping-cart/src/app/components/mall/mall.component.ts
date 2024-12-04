@@ -28,8 +28,10 @@ export class MallComponent {
 
   openProductDetail(product: Product) {
     const dialogRef = this.popupServ.openDialog(ProductDetailComponent, {
-      data: product
-    })
+      data: product,
+      minWidth: undefined,
+      width: '510px',
+    });
   }
 
   ngOnInit() {
@@ -47,6 +49,7 @@ export class MallComponent {
 
   onClickedOpenCart() {
     if (!this.cartServ.cartItems.length) return;
+    this.cartServ.cartItems = this.cartServ.cartItems;
     const dialogRef = this.popupServ.openDialog(CartComponent);
   }
 

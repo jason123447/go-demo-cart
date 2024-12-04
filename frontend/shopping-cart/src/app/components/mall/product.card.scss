@@ -16,10 +16,10 @@
       }
     }
     .card-actions {
-      padding: 0 12px;
+      padding: 0 16px;
       .price {
         font-size: 1.375rem;
-        color: oklch(0.64 0.23 15.01);;
+        color: var(--price-text-color);
         margin-right: auto;
       }
     }

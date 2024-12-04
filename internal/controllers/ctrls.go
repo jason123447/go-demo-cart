@@ -11,11 +11,11 @@ import (
 
 func SetControllers(r *gin.Engine) {
 	r.GET("/user/:id", handlers.GetUserHandler)
-	r.POST("/product", middlewares.ValidationMiddleware(&repository.Product{}), handlers.PostProductHandler)
-	r.PUT("/product", middlewares.ValidationMiddleware(&repository.Product{}), handlers.PutProductHandler)
+	r.POST("/product", middlewares.ValidationMiddleware[repository.Product](), handlers.PostProductHandler)
+	r.PUT("/product", middlewares.ValidationMiddleware[repository.Product](), handlers.PutProductHandler)
 	r.GET("/product/img/:id", handlers.GetProductImgHandler)
 	r.GET("/products", handlers.GetProductsHandler)
-	r.POST("/order", middlewares.ValidationMiddleware(&repository.Order{}), handlers.PostOrderHandler)
+	r.POST("/order", middlewares.ValidationMiddleware[repository.Order](), handlers.PostOrderHandler)
 	r.GET("/research", func(c *gin.Context) {
 		img := c.DefaultQuery("img", "true")
 		param := c.Query("param")

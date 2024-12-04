@@ -6,12 +6,19 @@ import (
 	"github.com/jason123447/go-demo-project/internal/db"
 )
 
-type OrderStatus string
+type ORDERSTATUS string
 
 const (
-	Pending OrderStatus = "Pending"
-	Done    OrderStatus = "Done"
+	OrderStatus_Pending ORDERSTATUS = "Pending"
+	OrderStatus_Done    ORDERSTATUS = "Done"
 )
+
+// type STATUS string
+
+// const (
+// 	OrderStatus_Pending ORDERSTATUS = "Pending"
+// 	OrderStatus_Done    ORDERSTATUS = "Done"
+// )
 
 type OrderItem struct {
 	ID        int     `json:"id" gorm:"primary_key"`
@@ -24,14 +31,17 @@ type OrderItem struct {
 type Order struct {
 	ID         int         `json:"id" gorm:"primary_key"`
 	UserID     int         `json:"user_id"`
-	Status     OrderStatus `json:"status"`
-	Total      float64     `json:"total" validate:"gt=0"`
+	Status     ORDERSTATUS `json:"status"`
+	Total      float64     `json:"total"`
 	CreatedAt  time.Time   `json:"created_at" validate:"-"`
 	OrderItems []OrderItem `json:"order_items" gorm:"foreignKey:OrderID"`
+	// PrimaryKey_ID int `json:"id" gorm:"primary_key"`
+	// OrderItems []OrderItem `json:"order_items" gorm:"foreignKey:OrderID;references:PrimaryKey_ID"`
 }
 
 func CreateOrder(order *Order) error {
 	database := db.DB
+	order.Status = OrderStatus_Pending
 	result := database.Create(order)
 	return result.Error
 }

@@ -31,7 +31,7 @@
         <span class="mr-4 text-lg">
             Total: <span class="price-text">${{cartServ.total}}</span>
         </span>
-        <button mat-raised-button color="warn">結帳 {{cartServ.getCartItemsLengthDisplay()}}</button>
+        <button mat-raised-button color="warn" (click)="onClickedCheckout()">結帳 {{cartServ.getCartItemsLengthDisplay()}}</button>
     </div>
 
 </div>

@@ -36,7 +36,6 @@ export class MallComponent {
 
   ngOnInit() {
     this.initData();
-    this.dataServ.postOrder();
   }
 
   async initData() {

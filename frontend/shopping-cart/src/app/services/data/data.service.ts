@@ -1,6 +1,6 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Product } from './models.interface';
+import { Order, Product } from './models.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -47,19 +47,8 @@ export class DataService {
     return this.http.get<Product>(`${this.apiurl}/product/img/${id}`);
   }
 
-  postOrder() {
-    this.http.post(`${this.apiurl}/order`, {
-      user_id: 2,
-      status: "Pending",
-      total: 160,
-      order_items: [
-        {
-          product_id: 50,
-          quantity: 2,
-          price: 160
-        }
-      ]
-    }).subscribe()
+  postOrder(order: Order) {
+    return this.http.post(`${this.apiurl}/order`, order);
   }
 
   fileToBase64(blob: Blob) {

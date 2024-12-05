@@ -25,4 +25,9 @@ export interface OrderItem {
 
 export interface User {
     id?: number;
+    email?: string;
+    username?: string;
+    password?: string;
+    jwtToken?: string;
+    // password_hash
 }

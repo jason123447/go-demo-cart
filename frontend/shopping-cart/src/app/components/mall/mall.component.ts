@@ -14,7 +14,7 @@ import { CartComponent } from './cart/cart.component';
 @Component({
   selector: 'app-mall',
   standalone: true,
-  imports: [NgMaterialModule, CdkDrag, CdkDragHandle],
+  imports: [NgMaterialModule],
   templateUrl: './mall.component.html',
   styleUrl: './mall.component.scss'
 })
@@ -36,6 +36,7 @@ export class MallComponent {
 
   ngOnInit() {
     this.initData();
+
   }
 
   async initData() {

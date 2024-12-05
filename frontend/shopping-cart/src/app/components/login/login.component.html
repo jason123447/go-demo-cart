@@ -4,8 +4,8 @@
         <div class="field">
             <mat-form-field>
                 <mat-icon matPrefix>person</mat-icon>
-                <input matInput type="text" placeholder="Account" formControlName="account">
-                @if (loginForm.controls.account.hasError('required')) {
+                <input matInput type="text" placeholder="Account" formControlName="email">
+                @if (loginForm.controls.email.hasError('required')) {
                     <mat-error>Account is required</mat-error>
                 }
             </mat-form-field>

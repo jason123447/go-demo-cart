@@ -23,8 +23,8 @@ export class LoginComponent {
   router = inject(Router);
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')])
+    email: new FormControl('test123', [Validators.required/* , Validators.email */]),
+    password: new FormControl('test123', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(16)])
   })
 
   ngOnInit() {
@@ -44,4 +44,8 @@ export class LoginComponent {
     this.popupServ.openSnackBar('Login successfully !!');
     this.router.navigate(['/mall']);
   }
+
+  // onClickedRegister() {
+  //   // console.log('register');
+  // }
 }

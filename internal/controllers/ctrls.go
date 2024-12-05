@@ -28,7 +28,7 @@ func SetControllers(r *gin.Engine) {
 		originPwd := user.Password
 		database := db.DB
 		result := database.Model(repository.User{}).Select("id, email, password_hash").Where("email = ?", user.Email).Find((&user))
-		if result.Error != nil {
+		if result.Error != nil || result.RowsAffected == 0 {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Can't find this account"})
 			c.Abort()
 			return

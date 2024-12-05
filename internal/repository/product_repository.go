@@ -45,6 +45,18 @@ func GetAllProducts() (*[]QueryProduct, error) {
 	return &products, result.Error
 }
 
+/*
+ * Gorm使用struct執行sql 只會 SELECT *
+ * Img欄位目前使用base64，容易造成slow query
+ * 目前求方便，並未使用
+ */
+func GetAllProductsWithoutImg() (*[]QueryProduct, error) {
+	database := db.DB
+	var products []QueryProduct
+	result := database.Model(Product{}).Select("id, name, description, price, stock").Find(&products)
+	return &products, result.Error
+}
+
 // func GetAllProducts() (*[]QueryProduct, error) {
 // 	database := db.DB
 // 	var products []QueryProduct

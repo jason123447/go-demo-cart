@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { NgMaterialModule } from '../../modules/ng-material/ng-material.module';
 import { LayoutService } from '../../services/layout.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -14,4 +15,5 @@ import { LayoutService } from '../../services/layout.service';
 })
 export class MainComponent {
   layoutServ = inject(LayoutService)
+  authServ = inject(AuthService)
 }

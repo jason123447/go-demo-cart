@@ -37,10 +37,9 @@ export class LoginComponent {
       return;
     }
     this.layoutServ.appLoading = true;
-    await firstValueFrom(this.authServ.postLogin(this.loginForm.value as any).pipe(tap(user => {
-      this.authServ.user = user;
-    }))).catch(err => err);
+    const res = await this.authServ.login(this.loginForm.value as any);
     this.layoutServ.appLoading = false;
+    if(res.ok === false) return;
     this.popupServ.openSnackBar('Login successfully !!');
     this.router.navigate(['/mall']);
   }

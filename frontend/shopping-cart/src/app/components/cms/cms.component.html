@@ -1,6 +1,4 @@
 <div class="w-full" style="height: 4px;">
-    <!-- <mat-progress-bar class="w-full" color="accent" mode="query">
-    </mat-progress-bar> -->
 </div>
 <div class="flex flex-wrap p-4">
     <div class="flex w-full items-center gap-3 mb-4">
@@ -10,21 +8,6 @@
                     class="add-icon text-white">add</mat-icon></button>
         </div>
     </div>
-    <form>
-        <mat-form-field>
-            <mat-label>Product name</mat-label>
-            <input matInput placeholder="name">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Product name</mat-label>
-            <input matInput placeholder="name">
-        </mat-form-field>
-        <mat-form-field floatLabel="always">
-            <mat-label>Price</mat-label>
-            <input matInput type="number" class="right-align" placeholder="0">
-            <span matTextPrefix>$&nbsp;</span>
-        </mat-form-field>
-    </form>
     <div class="table-container w-full">
         <table mat-table class="admin-table" #table [dataSource]="products">
             <ng-container matColumnDef="id">

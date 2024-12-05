@@ -45,7 +45,8 @@ func ErrorHandlerMiddleware() gin.HandlerFunc {
 		}
 	}
 }
-func ReflectCopyAny(input any) (any, error) {
+
+func reflectCopyAny(input any) (any, error) {
 	val := reflect.ValueOf(input)
 	if val.Kind() != reflect.Ptr {
 		return nil, errors.New("input must be a pointer")
@@ -88,7 +89,7 @@ func ValidationMiddleware[T any]() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		validated_obj, copyErr := ReflectCopyAny(&obj)
+		validated_obj, copyErr := reflectCopyAny(&obj)
 		if copyErr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"status":  "error",

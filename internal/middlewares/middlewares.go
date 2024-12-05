@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"reflect"
 	"runtime/debug"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -118,11 +119,10 @@ func CheckPassword(hashedPassword, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
 
-func GenerateJWT(userID int, role string, secretKey string) (string, error) {
+func GenerateJWT(userID int, secretKey string) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id": userID,
-		// "role":    role,
-		"exp": time.Now().Add(time.Hour * 24).Unix(),
+		"exp":     time.Now().Add(time.Hour * 24).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(secretKey))
@@ -136,9 +136,9 @@ func AuthMiddleware(secretKey string) gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-
+		trimPrefixTokenString := strings.TrimPrefix(tokenString, "Bearer ")
 		token, err := jwt.Parse(
-			tokenString,
+			trimPrefixTokenString,
 			func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("unexpected signing method")
@@ -153,8 +153,8 @@ func AuthMiddleware(secretKey string) gin.HandlerFunc {
 		}
 
 		claims := token.Claims.(jwt.MapClaims)
-		c.Set("user_id", (claims["user_id"]).(int))
-		c.Set("role", claims["role"].(string))
+		c.Set("user_id", int(claims["user_id"].(float64)))
+		// c.Set("role", claims["role"].(string))
 		c.Next()
 	}
 }

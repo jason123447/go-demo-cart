@@ -38,7 +38,7 @@ func SetControllers(r *gin.Engine) {
 			c.Abort()
 			return
 		}
-		if token, err := middlewares.GenerateJWT(user.ID, "role", secretKey); err != nil {
+		if token, err := middlewares.GenerateJWT(user.ID, secretKey); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Unexcepted error"})
 			c.Abort()
 			return

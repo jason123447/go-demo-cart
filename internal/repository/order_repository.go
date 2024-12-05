@@ -9,8 +9,9 @@ import (
 type ORDERSTATUS string
 
 const (
-	OrderStatus_Pending ORDERSTATUS = "Pending"
-	OrderStatus_Done    ORDERSTATUS = "Done"
+	OrderStatus_Pending  ORDERSTATUS = "Pending"
+	OrderStatus_Done     ORDERSTATUS = "Done"
+	OrderStatus_Canceled ORDERSTATUS = "Canceled"
 )
 
 // type STATUS string

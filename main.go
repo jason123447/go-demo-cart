@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	db.InitDB()
 	r := gin.Default()
 	r.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -23,7 +24,6 @@ func main() {
 	})
 	// r.Use(cors.Default())
 	r.Use(middlewares.ErrorHandlerMiddleware())
-	db.InitDB()
 	// controllers.setControllers(r)
 	controllers.SetControllers(r)
 	log.Fatal(r.Run(":8081"))

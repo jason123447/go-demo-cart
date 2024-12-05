@@ -2,14 +2,18 @@ package middlewares
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"reflect"
 	"runtime/debug"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	"github.com/golang-jwt/jwt/v4"
+	"golang.org/x/crypto/bcrypt"
 	// "github.com/jason123447/go-demo-project/internal/repository"
 )
 
@@ -100,6 +104,57 @@ func ValidationMiddleware[T any]() gin.HandlerFunc {
 			return
 		}
 		c.Set("validated_obj", validated_obj)
+		c.Next()
+	}
+}
+
+// /* auth */
+func HashPassword(password string) (string, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(hashedPassword), err
+}
+
+func CheckPassword(hashedPassword, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+}
+
+func GenerateJWT(userID int, role string, secretKey string) (string, error) {
+	claims := jwt.MapClaims{
+		"user_id": userID,
+		// "role":    role,
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(secretKey))
+}
+
+func AuthMiddleware(secretKey string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tokenString := c.GetHeader("Authorization")
+		if tokenString == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Missing token"})
+			c.Abort()
+			return
+		}
+
+		token, err := jwt.Parse(
+			tokenString,
+			func(token *jwt.Token) (interface{}, error) {
+				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+					return nil, fmt.Errorf("unexpected signing method")
+				}
+				return []byte(secretKey), nil
+			})
+
+		if err != nil || !token.Valid {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
+			c.Abort()
+			return
+		}
+
+		claims := token.Claims.(jwt.MapClaims)
+		c.Set("user_id", (claims["user_id"]).(int))
+		c.Set("role", claims["role"].(string))
 		c.Next()
 	}
 }

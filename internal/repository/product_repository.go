@@ -76,3 +76,10 @@ func GetProductById(id int) (*Product, error) {
 	result := database.First(&product, id)
 	return &product, result.Error
 }
+
+func GetProductsByIds(id []int) (*[]Product, error) {
+	database := db.DB
+	var products []Product
+	result := database.Model(&Product{}).Where("id IN ?", id).Find(&products)
+	return &products, result.Error
+}

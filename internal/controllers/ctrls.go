@@ -54,6 +54,7 @@ func SetControllers(r *gin.Engine) {
 	r.PUT("/product", middlewares.ValidationMiddleware[repository.Product](), handlers.PutProductHandler)
 	r.GET("/product/img/:id", handlers.GetProductImgHandler)
 	r.GET("/products", handlers.GetProductsHandler)
+	r.GET("/products/ids", handlers.GetProductsByIdsHandler)
 
 	// authRoute := r.Group("/auth")
 	// authRoute.POST("/order", middlewares.ValidationMiddleware[repository.Order](), handlers.PostOrderHandler)

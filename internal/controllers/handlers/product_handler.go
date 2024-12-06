@@ -60,3 +60,18 @@ func GetProductImgHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"id": productID, "img": base64Str})
 	// c.JSON(http.StatusOK, repository.Product{ID: productID, Img: base64Str})
 }
+
+func GetProductsByIdsHandler(c *gin.Context) {
+	ids := c.QueryArray("ids")
+	var productIDs []int
+	for _, id := range ids {
+		intID, _ := strconv.Atoi(id)
+		productIDs = append(productIDs, intID)
+	}
+	product, err := services.GetProductById(productIDs)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		return
+	}
+	c.JSON(http.StatusOK, product)
+}

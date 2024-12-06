@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/jason123447/go-demo-project/internal/db"
+	"gorm.io/gorm"
 )
 
 type ORDERSTATUS string
@@ -45,4 +46,10 @@ func CreateOrder(order *Order) error {
 	order.Status = OrderStatus_Pending
 	result := database.Create(order)
 	return result.Error
+}
+
+func GetOrdersPaged(db *gorm.DB, userID int) (*[]Order, error) {
+	var orders []Order
+	db.Where("user_id = ?", userID).Find(&orders)
+	return &orders, nil
 }

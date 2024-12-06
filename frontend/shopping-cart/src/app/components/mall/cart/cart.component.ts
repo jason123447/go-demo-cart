@@ -9,6 +9,7 @@ import { DataService } from '../../../services/data/data.service';
 import { LayoutService } from '../../../services/layout.service';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cart',
@@ -22,6 +23,7 @@ export class CartComponent {
   authServ = inject(AuthService);
   dataServ = inject(DataService);
   layoutServ = inject(LayoutService);
+  dialogRef = inject(MatDialogRef);
   total: number = 0.00;
   get cartItems() {
     return this.cartServ.cartItems;
@@ -60,7 +62,7 @@ export class CartComponent {
       ))
     })).catch(err => err);
     this.layoutServ.appLoading = false;
-
+    this.dialogRef.close();
   }
 
 }

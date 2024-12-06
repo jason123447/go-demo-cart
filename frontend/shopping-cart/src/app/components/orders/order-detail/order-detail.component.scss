@@ -42,6 +42,12 @@
       align-items: center;
       justify-content: space-around;
       padding: 0 10px;
+      cursor: pointer;
+      &:not(.header) {
+        &:hover {
+          background: #dbdbdb;
+        }
+      }
       &:nth-child(n + 2) {
         border-top: 1px solid #bababa;
       }
@@ -51,16 +57,17 @@
       .product-name {
         font-weight: bold;
         font-size: 1.25rem;
-        width: 34%;
+        width: 25%;
+        max-width: 200px;
       }
       .product-price {
         width: 16%;
         color: var(--price-text-color);
+        &.header {
+          color: black;
+        }
       }
       .product-quantity {
-        width: fit-content;
-        display: inline-flex;
-        align-items: center;
         .action-icon-btn {
           display: inline-flex;
           justify-content: center;

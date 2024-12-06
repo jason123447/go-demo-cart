@@ -27,11 +27,7 @@ export class MallComponent {
   productList: Product[] = [];
 
   openProductDetail(product: Product) {
-    const dialogRef = this.popupServ.openDialog(ProductDetailComponent, {
-      data: product,
-      minWidth: undefined,
-      width: '510px',
-    });
+    this.popupServ.openProductDetail(product)
   }
 
   ngOnInit() {

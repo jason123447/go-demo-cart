@@ -1,0 +1,29 @@
+<div class="cart-container">
+    <div class="inline-flex text-2xl justify-center px-1 cart-header">Order Items - order id: {{order_id}}</div>
+
+    <div class="cart-body p-2">
+        <div class="cart-item header">
+            <div class="product-name">Name</div>
+            <div class="product-price header">Price</div>
+            <div class="product-quantity">Quantity</div>
+            <div class="product-total">Total</div>
+        </div>
+        @for (item of orders_items; track $index) {
+        <div class="cart-item" *ngIf="item.product" (click)="onClickedShowProductDetail(item)">
+            <div class="product-name">{{ item.product.name }}</div>
+            <div class="product-price">${{ item.product.price }}</div>
+            <div class="product-quantity">
+                {{ item.quantity }}
+            </div>
+            <div class="product-total price-text">${{ (item.product.price! * item.quantity!).toFixed(2) }}</div>
+        </div>
+        }
+    </div>
+
+    <div class="cart-action p-2">
+        <span class="mr-4 text-lg">
+            Total: <span class="price-text">${{total}}</span>
+        </span>
+    </div>
+
+</div>

@@ -3,6 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { Order, Product } from './models.interface';
 import { Observable } from 'rxjs';
 
+export interface PagedResponse<T> {
+  data: T[];
+  offset: number;
+  page: number;
+  page_size: number;
+  total: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +26,15 @@ export class DataService {
 
   getProducts() {
     return this.http.get<Product[]>(`${this.apiurl}/products`);
+  }
+
+  getProductsByIds(ids: number[]) {
+    let queryStr = ids.reduce((curr, next) => {
+      curr += `ids=${next}&`
+      return curr;
+    }, '?')
+    queryStr = queryStr.slice(0, -1);
+    return this.http.get<Product[]>(`${this.apiurl}/products/ids${queryStr}`)
   }
 
   postProduct(product: Product) {
@@ -49,6 +65,10 @@ export class DataService {
 
   postOrder(order: Order) {
     return this.http.post(`${this.apiurl}/order`, order);
+  }
+
+  getOrders(page = 1, page_size = 10) {
+    return this.http.get<PagedResponse<Order>>(`${this.apiurl}/orders?page=${page}&page_size=${page_size}`)
   }
 
   fileToBase64(blob: Blob) {

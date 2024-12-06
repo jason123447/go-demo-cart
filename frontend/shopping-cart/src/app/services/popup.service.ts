@@ -2,6 +2,8 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Component, inject, Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Product } from './data/models.interface';
+import { ProductDetailComponent } from '../components/mall/product-detail/product-detail.component';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +31,13 @@ export class PopupService {
     });
 
     return dialogRef;
+  }
+
+  openProductDetail(product: Product) {
+    return this.openDialog(ProductDetailComponent, {
+      data: product,
+      minWidth: undefined,
+      width: '510px',
+    });
   }
 }

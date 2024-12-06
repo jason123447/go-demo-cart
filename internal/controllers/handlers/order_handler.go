@@ -18,12 +18,12 @@ func PostOrderHandler(c *gin.Context) {
 
 /* pagination implement */
 func GetOrdersHandler(c *gin.Context) {
-	paginator := utils.GeneratePaginator[repository.Order](c)
+	paginator := utils.GeneratePaginator(c)
 	userID, _ := c.Get("user_id")
 
-	orders, err := services.GetOrderPagedSvc(paginator, userID.(int))
+	pagedOrders, err := services.GetOrderPagedSvc(paginator, userID.(int))
 	if err != nil {
 		panic(err)
 	}
-	c.JSON(http.StatusOK, orders)
+	c.JSON(http.StatusOK, pagedOrders)
 }

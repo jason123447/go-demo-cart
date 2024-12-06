@@ -11,9 +11,16 @@ func CreateOrderSvc(order *repository.Order) error {
 	return err
 }
 
-func GetOrderPagedSvc(paginator *utils.Paginator, userID int) (*[]repository.Order, error) {
+func GetOrderPagedSvc(paginator *utils.Paginator, userID int) (*utils.PagedResponse[repository.Order], error) {
 	database := db.DB
+
+	database.Model(&repository.Order{}).Where("user_id = ?", userID).Count(&paginator.Total)
 	database = database.Scopes(paginator.GormPagination())
+
 	orders, err := repository.GetOrdersPaged(database, userID)
-	return orders, err
+	var res = &utils.PagedResponse[repository.Order]{
+		Paginator: paginator,
+		Data:      orders,
+	}
+	return res, err
 }

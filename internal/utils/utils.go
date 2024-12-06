@@ -9,18 +9,18 @@ import (
 )
 
 type Paginator struct {
-	Total    int `json:"total"`
-	PageSize int `json:"page_size"`
-	Offset   int `json:"offset"`
-	Page     int `json:"page"`
+	Total    int64 `json:"total"`
+	PageSize int   `json:"page_size"`
+	Offset   int   `json:"offset"`
+	Page     int   `json:"page"`
 }
 
 type PagedResponse[T any] struct {
-	Paginator
-	Data T `json:"data"`
+	*Paginator
+	Data *[]T `json:"data"`
 }
 
-func GeneratePaginator[T any](c *gin.Context) *Paginator {
+func GeneratePaginator(c *gin.Context) *Paginator {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
 	paginator := &Paginator{Page: page, PageSize: pageSize}

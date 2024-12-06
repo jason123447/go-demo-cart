@@ -28,6 +28,7 @@ type OrderItem struct {
 	ProductId int     `json:"product_id"`
 	Quantity  int     `json:"quantity"`
 	Price     float64 `json:"price"`
+	// Product   Product `json:"product" gorm:"foreignKey:ID;references:ProductId"`
 }
 
 type Order struct {
@@ -50,6 +51,8 @@ func CreateOrder(order *Order) error {
 
 func GetOrdersPaged(db *gorm.DB, userID int) (*[]Order, error) {
 	var orders []Order
-	db.Where("user_id = ?", userID).Find(&orders)
-	return &orders, nil
+	result := db.Preload("OrderItems").Where("user_id = ?", userID).Order("id ASC").Find(&orders)
+	// result := db.Preload("OrderItems").Preload("OrderItems.Product").Where("user_id = ?", userID).Order("id ASC").Find(&orders)
+	// db.Where("user_id = ?", userID).Find(&orders)
+	return &orders, result.Error
 }

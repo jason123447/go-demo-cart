@@ -15,6 +15,12 @@ func PostOrderHandler(c *gin.Context) {
 		panic(err)
 	}
 }
+func PostOrderWithTransactionHandler(c *gin.Context) {
+	order := c.MustGet("validated_obj").(*repository.Order)
+	if err := services.CreateOrderWithTransaction(order); err != nil {
+		panic(err)
+	}
+}
 
 /* pagination implement */
 func GetOrdersHandler(c *gin.Context) {

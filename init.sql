@@ -14,7 +14,8 @@ CREATE TABLE Products (
     description TEXT,
     price DECIMAL(10, 2) NOT NULL CHECK (price > 0),
     stock INT NOT NULL DEFAULT 0 CHECK (stock >= 0),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    img TEXT
 );
 
 -- 建立 Carts 表
@@ -40,7 +41,7 @@ CREATE TABLE Cart_Items (
 CREATE TABLE Orders (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    status VARCHAR(20) NOT NULL DEFAULT 'pending',  -- 訂單狀態如 pending, completed, cancelled
+    status VARCHAR(20) NOT NULL DEFAULT 'Pending',
     total DECIMAL(10, 2) NOT NULL CHECK (total >= 0),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE

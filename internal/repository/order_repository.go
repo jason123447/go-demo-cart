@@ -32,12 +32,17 @@ type OrderItem struct {
 }
 
 type Order struct {
-	ID         int         `json:"id" gorm:"primary_key"`
-	UserID     int         `json:"user_id"`
-	Status     ORDERSTATUS `json:"status"`
-	Total      float64     `json:"total"`
-	CreatedAt  time.Time   `json:"created_at" validate:"-"`
+	ID     int         `json:"id" gorm:"primary_key"`
+	UserID int         `json:"user_id"`
+	Status ORDERSTATUS `json:"status"`
+	Total  float64     `json:"total"`
+	/*
+		https://github.com/go-gorm/gorm/issues/4834
+		gorm Create和Find的時區會不同 應該可以用gorm.Callback().Create().Before("gorm:create").Register("set_created_at", )處理
+	*/
+	CreatedAt  time.Time   `json:"created_at" validate:"-" gorm:"type:timestamp"`
 	OrderItems []OrderItem `json:"order_items" gorm:"foreignKey:OrderID"`
+	// gorm:"type:timestamp"
 	// PrimaryKey_ID int `json:"id" gorm:"primary_key"`
 	// OrderItems []OrderItem `json:"order_items" gorm:"foreignKey:OrderID;references:PrimaryKey_ID"`
 }

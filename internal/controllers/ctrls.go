@@ -59,7 +59,8 @@ func SetControllers(r *gin.Engine) {
 	// authRoute := r.Group("/auth")
 	// authRoute.POST("/order", middlewares.ValidationMiddleware[repository.Order](), handlers.PostOrderHandler)
 
-	r.POST("/order", middlewares.ValidationMiddleware[repository.Order](), handlers.PostOrderHandler)
+	// r.POST("/order", middlewares.ValidationMiddleware[repository.Order](), handlers.PostOrderHandler)
+	r.POST("/order", middlewares.ValidationMiddleware[repository.Order](), handlers.PostOrderWithTransactionHandler)
 
 	r.GET("/orders", middlewares.AuthMiddleware(secretKey), handlers.GetOrdersHandler)
 	r.GET("/research", func(c *gin.Context) {

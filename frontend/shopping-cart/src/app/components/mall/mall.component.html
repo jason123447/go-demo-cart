@@ -15,7 +15,7 @@
             <span class="price">${{product.price}}</span>
             <!-- <mat-icon>favorite_outline</mat-icon>
             <mat-icon>favorite</mat-icon> -->
-            <button mat-button color="warn" (click)="onClickedAddToCart(product,$event)">加入 {{cartServ.getCartItemQuantity(product.id!)}}</button>
+            <button mat-button color="warn" class="font-extrabold" (click)="onClickedAddToCart(product,$event)">加入 {{cartServ.getCartItemQuantity(product.id!)}}</button>
         </mat-card-actions>
     </mat-card>
 </div>

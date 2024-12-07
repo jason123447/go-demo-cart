@@ -14,5 +14,11 @@
         margin-right: auto;
       }
     }
+    .desc {
+      &.detail {
+        display: block;
+        text-indent: 1em;
+      }
+    }
   }
 }

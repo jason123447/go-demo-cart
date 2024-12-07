@@ -26,3 +26,8 @@ func GetProductImgSvc(id int) (string, error) {
 	product, err := repository.GetProductById(id)
 	return product.Img, err
 }
+
+func GetProductById(ids []int) (*[]repository.Product, error) {
+	products, err := repository.GetProductsByIds(ids)
+	return products, err
+}

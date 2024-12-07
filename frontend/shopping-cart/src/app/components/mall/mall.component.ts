@@ -14,7 +14,7 @@ import { CartComponent } from './cart/cart.component';
 @Component({
   selector: 'app-mall',
   standalone: true,
-  imports: [NgMaterialModule, CdkDrag, CdkDragHandle],
+  imports: [NgMaterialModule],
   templateUrl: './mall.component.html',
   styleUrl: './mall.component.scss'
 })
@@ -27,14 +27,12 @@ export class MallComponent {
   productList: Product[] = [];
 
   openProductDetail(product: Product) {
-    const dialogRef = this.popupServ.openDialog(ProductDetailComponent, {
-      data: product
-    })
+    this.popupServ.openProductDetail(product)
   }
 
   ngOnInit() {
     this.initData();
-    this.dataServ.postOrder();
+
   }
 
   async initData() {
@@ -47,6 +45,7 @@ export class MallComponent {
 
   onClickedOpenCart() {
     if (!this.cartServ.cartItems.length) return;
+    this.cartServ.cartItems = this.cartServ.cartItems;
     const dialogRef = this.popupServ.openDialog(CartComponent);
   }
 

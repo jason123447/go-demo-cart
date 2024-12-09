@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-    networks:
-      - app-network
+  # app:
+  #   build: .
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - app-network
 
   db:
     image: postgres:13
@@ -21,11 +21,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - app-network
 
 volumes:
   db_data:
 
-networks:
-  app-network:

@@ -36,8 +36,11 @@ jobs:
       run: |
         cd frontend/shopping-cart
         npm run build -- --base-href="/go-demo-cart/"
-        cd ../..
-        touch frontend/shopping-cart/dist/shopping-cart/.nojekyll
+
+    - name: Verify build output
+      run: |
+        cd frontend/shopping-cart
+        ls -l dist/shopping-cart
 
     # 部署到 GitHub Pages
     - name: Deploy to GitHub Pages

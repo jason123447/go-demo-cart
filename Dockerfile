@@ -1,21 +1,14 @@
-# 使用官方 Golang 鏡像
-FROM golang:1.23-alpine
+# 使用官方的 PostgreSQL 基礎映像
+FROM postgres:13
 
-# 設置工作目錄
-WORKDIR /app
+# 設定 PostgreSQL 使用者和資料庫的初始化環境變數
+ENV POSTGRES_USER=admin
+ENV POSTGRES_PASSWORD=admin
+ENV POSTGRES_DB=go_demo_db
 
-# 複製 go.mod 和 go.sum 並下載依賴
-COPY go.mod go.sum ./
-RUN go mod download
+# 複製初始化 SQL 腳本到 Docker 容器中
+# 這樣容器啟動時會自動執行這些 SQL 來初始化資料庫
+COPY ./init.sql /docker-entrypoint-initdb.d/
 
-# 複製應用代碼
-COPY . .
-
-# 編譯應用
-RUN go build -o main .
-
-# 開放 8080 端口
-EXPOSE 8080
-
-# 啟動應用
-CMD ["./main"]
+# 設定 PostgreSQL 容器的對外端口（如果需要修改）
+EXPOSE 5432

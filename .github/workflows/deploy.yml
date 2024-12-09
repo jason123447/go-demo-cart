@@ -1,0 +1,40 @@
+name: Deploy Angular to GitHub Pages
+
+on:
+  push:
+    branches:
+      - deploy_fe  # 或你的主要分支名稱
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 檢查程式碼
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 設置 Node.js 環境
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20  # Angular 預設支援的 Node.js 版本
+
+    # 安裝依賴項
+    - name: Install dependencies
+      run: |
+        cd frontend/shopping-cart
+        npm install
+
+    # 建構 Angular 應用程式
+    - name: Build Angular app
+      run: |
+        cd frontend/shopping-cart
+        npm run build -- --base-href="/go-demo-cart/"
+
+    # 部署到 GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: frontend/shopping-cart/dist/shopping-cart

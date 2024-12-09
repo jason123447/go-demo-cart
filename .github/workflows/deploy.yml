@@ -36,6 +36,7 @@ jobs:
       run: |
         cd frontend/shopping-cart
         npm run build -- --base-href="/go-demo-cart/"
+        cd ../..
         touch frontend/shopping-cart/dist/shopping-cart/.nojekyll
 
     # 部署到 GitHub Pages

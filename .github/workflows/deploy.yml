@@ -35,8 +35,7 @@ jobs:
     - name: Build Angular app
       run: |
         cd frontend/shopping-cart
-        npm run build -- --base-href="/go-demo-cart/" ls -la
-        touch frontend/shopping-cart/dist/shopping-cart/.nojekyll
+        npm run build -- --base-href="/go-demo-cart/"
 
     # 部署到 GitHub Pages
     - name: Deploy to GitHub Pages

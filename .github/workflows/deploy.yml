@@ -31,6 +31,7 @@ jobs:
       run: |
         cd frontend/shopping-cart
         npm run build -- --base-href="/go-demo-cart/"
+        touch frontend/shopping-cart/dist/shopping-cart/.nojekyll
 
     # 部署到 GitHub Pages
     - name: Deploy to GitHub Pages
@@ -41,4 +42,5 @@ jobs:
 
     # 顯示部署的網址
     - name: Display deployment URL
-      run: echo "Your site is deployed at: https://<username>.github.io/<repo>/"
+      run: | 
+        echo "Your site is deployed at: https://<username>.github.io/<repo>/"

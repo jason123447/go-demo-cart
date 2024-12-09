@@ -9,7 +9,7 @@ import { PopupService } from './popup.service';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly apiurl = 'http://127.0.0.1:8081'
+  private readonly apiurl = 'https://go-demo-cart.onrender.com'
   popupServ = inject(PopupService);
   user?: User = {};
   constructor() { }

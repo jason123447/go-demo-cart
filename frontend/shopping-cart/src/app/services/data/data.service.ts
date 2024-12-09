@@ -15,7 +15,7 @@ export interface PagedResponse<T> {
 })
 export class DataService {
   private readonly http = inject(HttpClient);
-  private readonly apiurl = 'http://127.0.0.1:8081'
+  private readonly apiurl = 'https://go-demo-cart.onrender.com'
   constructor(
     private handler: HttpBackend
   ) { }

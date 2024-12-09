@@ -27,7 +27,7 @@ func InitDB() {
 	// 	log.Fatal(err)
 	// }
 
-	dsn := "postgresql://admin:U4TvHRgMMTsWmG7Po0nWARLNYUgJMzgI@dpg-ctb9mnt2ng1s73dqs990-a.singapore-postgres.render.com/go_demo_db"
+	dsn := "postgresql://admin:U4TvHRgMMTsWmG7Po0nWARLNYUgJMzgI@dpg-ctb9mnt2ng1s73dqs990-a/go_demo_db"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)

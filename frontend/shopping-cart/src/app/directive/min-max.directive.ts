@@ -33,6 +33,8 @@ export class MinMaxDirective {
             control.setValue(this.appMax, { emitEvent: false });
           } else if (this.appMin !== null && this.appMin !== undefined && inputVal <= this.appMin) {
             control.setValue(this.appMin, { emitEvent: false });
+          } else {
+            control.setValue(inputVal, { emitEvent: false });
           }
 
         }

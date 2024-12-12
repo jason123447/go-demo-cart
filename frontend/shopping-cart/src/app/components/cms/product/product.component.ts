@@ -7,11 +7,12 @@ import { PopupService } from '../../../services/popup.service';
 import { LayoutService } from '../../../services/layout.service';
 import { firstValueFrom, lastValueFrom, tap } from 'rxjs';
 import { Product } from '../../../services/data/models.interface';
+import { SharedDirectiveModule } from '../../../directive/shared-directive.module';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [NgMaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [NgMaterialModule, FormsModule, ReactiveFormsModule, SharedDirectiveModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })

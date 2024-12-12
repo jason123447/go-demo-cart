@@ -5,8 +5,13 @@ on:
     branches:
       - deploy_fe  # 或你的主要分支名稱
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,9 +37,25 @@ jobs:
         cd frontend/shopping-cart
         npm run build -- --base-href="/go-demo-cart/"
 
-    # 部署到 GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Verify build output
+      run: |
+        cd frontend/shopping-cart
+        ls -l dist/shopping-cart/browser
+    
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: frontend/shopping-cart/dist/shopping-cart
+        path: frontend/shopping-cart/dist/shopping-cart/browser
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+  

@@ -9,6 +9,10 @@
     "server-prod": "http-server ./dist/shopping-cart/browser",
     "test": "ng test"
   },
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.0.0",

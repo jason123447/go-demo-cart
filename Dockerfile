@@ -11,4 +11,4 @@ ENV POSTGRES_DB=go_demo_db
 COPY ./init.sql /docker-entrypoint-initdb.d/
 
 # 設定 PostgreSQL 容器的對外端口（如果需要修改）
-EXPOSE 5432
+EXPOSE 8080
